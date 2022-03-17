@@ -1,17 +1,3 @@
----
-title: title
-
-language_tabs: # must be one of https://git.io/vQNgJ
-
-
-toc_footers:
-- <a href='https://www.kucoin.com'>Sign Up for KuCoin</a>
-
-includes:
-
-search: true
----
-
 # Quick Start
 ## Introduction
 The KuCoin Pool Developer Documentation is an API document written for users who wish to obtain data from the KuCoin Pool.
