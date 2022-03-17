@@ -135,7 +135,7 @@ The REST request parameters must contain the following:
     api_key = "api_key"
     api_secret = "api_secret"
     api_passphrase = "api_passphrase"
-    url = 'https://api.kucoin.com/mining-pool/v1/external/algo/query'
+    url = 'https://www.kucoin.com/_api/miningpool/v1/external/algo/query'
     now = int(time.time() * 1000)
 
     passphrase = base64.b64encode(hmac.new(api_secret.encode('utf-8'), api_passphrase.encode('utf-8'), hashlib.sha256).digest())
