@@ -111,9 +111,9 @@ Before making a request through the API, you must create an Api Key from the off
 
 - Api-Key
 - Api-Secret
-- Passphrase
+- Api-Passphrase
 
-The Key and Secret are randomly generated and provided by KuCoin, while Passphrase is defined by you when creating the API. If the above information is lost, it cannot be recovered and you will need to re-apply for an Api-Key.
+The Api-Key and Api-Secret are randomly generated and provided by KuCoin, while Api-Passphrase is defined by you when creating the API. If the above information is lost, it cannot be recovered and you will need to re-apply for an Api-Key.
 
 ## Creation Request
 The REST request parameters must contain the following:
@@ -130,22 +130,29 @@ The REST request parameters must contain the following:
 
 
 ```
-    #Example for get algo list in python
+#Example for get algo list in python
 
-    api_key = "api_key"
-    api_secret = "api_secret"
-    api_passphrase = "api_passphrase"
-    url = 'https://www.kucoin.com/_api/miningpool/v1/external/algo/query'
-    now = int(time.time() * 1000)
+import base64
+import hashlib
+import hmac
+import time
+import requests
 
-    passphrase = base64.b64encode(hmac.new(api_secret.encode('utf-8'), api_passphrase.encode('utf-8'), hashlib.sha256).digest())
-    
-    sign_parameters = 'timestamp=' + str(now) + '&key=' + api_key + '&passphrase=' + passphrase + '&version=' + 2
-
-    url = url + '?' + sign_parameters
-    response = requests.request('get', url)
-    print(response.status_code)
-    print(response.json())
+url = 'https://www.kucoin.com/_api/miningpool/v1/external/algo/query'
+api_key = "api_key"
+api_secret = "api_secret"
+api_passphrase = "api_passphrase"
+now = int(time.time() * 1000)
+params = {
+    'key': api_key,
+    'passphrase': base64.b64encode(
+        hmac.new(api_secret.encode('utf-8'), api_passphrase.encode('utf-8'), hashlib.sha256).digest()),
+    'timestamp': now,
+    'version': 2
+}
+response = requests.get(url, params=params)
+print(response.status_code)
+print(response.json())
 
 ```
 

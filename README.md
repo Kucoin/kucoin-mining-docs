@@ -109,10 +109,10 @@ GET /v1/external/worker/query?currentPage=1&pageSize=50
 通过接口进行请求前，您需在官网矿池->设置->API管理创建API-KEY。创建成功后，您需妥善保管好以下三条信息：
 
 - Api-Key
-- Api-Secret
-- Passphrase
+- Api-Secret（密钥）
+- Api-Passphrase（密码）
 
-Key和Secret由KuCoin随机生成并提供，Passphrase是您在创建API时使用的密码。以上信息若遗失将无法恢复，需要重新申请API KEY。
+Api-Key和Api-Secret由KuCoin随机生成并提供，Api-Passphrase是您在创建API时使用的密码。以上信息若遗失将无法恢复，需要重新申请API KEY。
 
 ## 创建请求
 Rest请求地址参数中必须包含以下内容:
@@ -129,22 +129,29 @@ Rest请求地址参数中必须包含以下内容:
 
 
 ```
-    #Example for get algo list in python
+#Example for get algo list in python
 
-    api_key = "api_key"
-    api_secret = "api_secret"
-    api_passphrase = "api_passphrase"
-    url = 'https://www.kucoin.com/_api/miningpool/v1/external/algo/query'
-    now = int(time.time() * 1000)
+import base64
+import hashlib
+import hmac
+import time
+import requests
 
-    passphrase = base64.b64encode(hmac.new(api_secret.encode('utf-8'), api_passphrase.encode('utf-8'), hashlib.sha256).digest())
-    
-    sign_parameters = 'timestamp=' + str(now) + '&key=' + api_key + '&passphrase=' + passphrase + '&version=' + 2
-
-    url = url + '?' + sign_parameters
-    response = requests.request('get', url)
-    print(response.status_code)
-    print(response.json())
+url = 'https://www.kucoin.com/_api/miningpool/v1/external/algo/query'
+api_key = "api_key"
+api_secret = "api_secret"
+api_passphrase = "api_passphrase"
+now = int(time.time() * 1000)
+params = {
+    'key': api_key,
+    'passphrase': base64.b64encode(
+        hmac.new(api_secret.encode('utf-8'), api_passphrase.encode('utf-8'), hashlib.sha256).digest()),
+    'timestamp': now,
+    'version': 2
+}
+response = requests.get(url, params=params)
+print(response.status_code)
+print(response.json())
 
 ```
 
