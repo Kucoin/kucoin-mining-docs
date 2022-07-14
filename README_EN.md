@@ -485,8 +485,8 @@ type | string | Type of income MINING_EARN: Mining income; UNITE_COIN_EARN: Merg
 }
 ```
 
-### Currency total income
-get currency total income for user。
+## Currency total income
+get currency total income for user.
 
 **requency of requests:** 2 times per second at Api-Key level.
 

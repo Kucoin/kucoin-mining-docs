@@ -482,7 +482,7 @@ type | string | 补款类型。MINING_EARN:挖矿收益;UNITE_COIN_EARN:联合�
   "success": true
 }
 ```
-### 币种累计汇总收益
+## 币种累计汇总收益
 获取用户的累计汇总收益。
 
 **请求频率：** api-key级别每秒2次
