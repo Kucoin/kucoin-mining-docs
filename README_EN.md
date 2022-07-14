@@ -2,6 +2,9 @@
 ## Introduction
 The KuCoin Pool Developer Documentation is an API document written for users who wish to obtain data from the KuCoin Pool.
 
+## Upcoming Changes
+**14/07/2022:**
+- Add Currency total income interface
 
 # REST API
 ## API Server
@@ -481,3 +484,32 @@ type | string | Type of income MINING_EARN: Mining income; UNITE_COIN_EARN: Merg
   "success": true
 }
 ```
+
+### Currency total income
+get currency total income for user。
+
+**requency of requests:** 2 times per second at Api-Key level.
+
+#### HTTP Request
+GET /v1/external/user/earn
+
+#### Request Example
+GET /v1/external/user/earn?coinName=BTC
+
+#### Request Parameters
+
+Request Parameter | Type | Description | Required
+---|---|---|---
+coinName | String | currency | Yes
+
+#### Return Example
+
+```json
+{
+  "success": true,
+  "code": "200",
+  "msg": "success",
+  "retry": false,
+  "data": 12   //Currency total income
+}
+``

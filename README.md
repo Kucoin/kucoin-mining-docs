@@ -2,6 +2,10 @@
 ## 简介
 欢迎使用KuCoin矿池(KuCoin Pool)开发者文档。 此文档概述了用户获取矿池数据信息相关的开发接口。
 
+## 更新预告
+**14/07/2022:**
+- 【新增】币种累计汇总收益接口
+
 # REST API
 ## API服务器地址
 基本URL: https://www.kucoin.com/_api/miningpool
@@ -478,3 +482,31 @@ type | string | 补款类型。MINING_EARN:挖矿收益;UNITE_COIN_EARN:联合�
   "success": true
 }
 ```
+### 币种累计汇总收益
+获取用户的累计汇总收益。
+
+**请求频率：** api-key级别每秒2次
+
+#### HTTP请求
+GET /v1/external/user/earn
+
+#### 请求示例
+GET /v1/external/user/earn?coinName=BTC
+
+#### 请求参数
+
+请求参数 | 类型 | 含义 | 是否必传
+---|---|---|---
+coinName | String | 币种 | 是
+
+#### 返回示例
+
+```json
+{
+  "success": true,
+  "code": "200",
+  "msg": "success",
+  "retry": false,
+  "data": 12 //币种累计汇总收益金额
+}
+``
