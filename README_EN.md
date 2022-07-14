@@ -512,4 +512,4 @@ coinName | String | currency | Yes
   "retry": false,
   "data": 12   //Currency total income
 }
-``
+```

@@ -509,4 +509,4 @@ coinName | String | 币种 | 是
   "retry": false,
   "data": 12 //币种累计汇总收益金额
 }
-``
+```
