@@ -4,7 +4,10 @@
 
 ## 更新预告
 **14/07/2022:**
-- 【新增】币种累计汇总收益接口
+- 【新增】用户累计收益接口
+
+**27/07/2022:**
+- 【新增】所有子账户累计收益接口
 
 # REST API
 ## API服务器地址
@@ -159,6 +162,9 @@ print(response.json())
 
 ```
 
+# 名词解释
+- 用户：官网登录账户
+- 子账户：矿池系统中用户创建的挖矿账户
 
 # 算法模块
 ## 算法列表
@@ -195,8 +201,8 @@ data | list | 算法名称
 
 
 # 用户模块
-## 挖矿账户信息列表
-获取用户下所有的挖矿账户信息。
+## 子账户信息列表
+获取用户下所有的子账户信息。
 
 **请求频率：** api-key级别每秒2次
 
@@ -209,12 +215,12 @@ GET /v1/external/user/query
 #### 返回值
 参数 | 类型 | 含义
 ---|---|---
-defaultAlgo | string | 创建挖矿账户时所选算法
+defaultAlgo | string | 创建子账户时所选算法
 realHashRate | string | 实时算力
 hourHashRate | string | 小时算力
 dayHashRate | string | 日算力
-puid | Long | 挖矿账户id
-pname | string | 挖矿账户
+puid | Long | 子账户id
+pname | string | 子账户名称
 hashUnit | string | 算力单位(H)
 
 #### 返回示例
@@ -241,7 +247,7 @@ hashUnit | string | 算力单位(H)
 
 # 矿机模块
 ## 矿机列表
-获取挖矿账户下所有矿机信息。
+获取子账户下所有矿机信息。
 
 **请求频率：** api-key级别每秒2次
 
@@ -255,8 +261,10 @@ GET /v1/external/worker/query?algo=SHA256d&puid=4&sort=ASC&sortField=HASH_RATE&s
 
 请求参数 | 类型 | 含义 | 是否必传
 ---|---|---|---
+currentPage | Integer | 当前页 | 是
+pageSize | Integer | 每页数量 | 是
 algo | String | 算法 | 是
-puid | Long | 挖矿账户id | 是
+puid | Long | 子账户id | 是
 sortField | String | 排序字段。WORKER:矿机名;HASH_RATE:实时算力;HASH_RATE_HOUR:小时算力;HASH_RATE_DAY:日算力;REJECT:拒绝率;LAST_SHARE_TIME:最后提交时间 | 是
 sort | String | 排序方式。ASC:正序;DESC:倒序 | 是
 status | String | 矿机类型。TOTAL:总数;ACTIVE:活跃;INACTIVE:不活跃;INVALID:无效 | 是
@@ -322,7 +330,7 @@ GET /v1/external/worker/get?algo=SHA256d&currentPage=1&pageSize=10&puid=4&worker
 currentPage | Integer | 当前页 | 是
 pageSize | Integer | 每页数量 | 是
 algo | String | 算法 | 是
-puid | Long | 挖矿账户id | 是
+puid | Long | 子账户id | 是
 workerId | Long | 矿机id | 是
 
 #### 返回值
@@ -362,7 +370,7 @@ status | String | 矿机类型。TOTAL:总数;ACTIVE:活跃;INACTIVE:不活跃;I
 
 # 收益模块
 ### 收益列表
-获取挖矿账户的挖矿收益
+获取子账户的挖矿收益
 
 **请求频率：** api-key级别每秒2次
 
@@ -379,7 +387,7 @@ GET /v1/external/earn/query?currentPage=1&pageSize=50&algo=SHA256d&puid=1&startT
 currentPage | Integer | 当前页 | 是
 pageSize | Integer | 每页数量 | 是
 algo | String | 算法 | 是
-puid | Long | 挖矿账户id | 是
+puid | Long | 子账户id | 是
 startTime | Long | 挖矿开始日期 时间戳(UTC) | 否
 endTime | Long | 挖矿结束日期 时间戳(UTC) | 否
 
@@ -388,7 +396,7 @@ endTime | Long | 挖矿结束日期 时间戳(UTC) | 否
 ---|---|---
 amount | string | 收益
 currency | string | 收益单位
-miningDate | Long | 挖矿日期
+miningDate | Long | 收益日期
 settleTime | Long | 打款时间
 hashRate | string | 日算力
 hashUnit | string | 算力单(H)
@@ -423,7 +431,7 @@ status | string | 支付状态。WAIT_SETTLE:待支付;SETTLED:已支付
 ```
 
 ## 额外收益列表
-获取挖矿账户的收益信息
+获取子账户的收益信息
 
 **请求频率：** api-key级别每秒2次
 
@@ -440,7 +448,7 @@ GET /v1/external/reward/query?currentPage=1&pageSize=50&algo=SHA256d&puid=1&star
 currentPage | Integer | 当前页 | 是
 pageSize | Integer | 每页数量 | 是
 algo | String | 算法 | 是
-puid | Long | 挖矿账户id | 是
+puid | Long | 子账户id | 是
 startTime | Long | 开始日期 时间戳(UTC) | 否
 endTime | Long | 结束日期 时间戳(UTC) | 否
 
@@ -449,12 +457,12 @@ endTime | Long | 结束日期 时间戳(UTC) | 否
 ---|---|---
 amount | string | 收益
 currency | string | 收益单位
-miningDate | Long | 挖矿日期
+miningDate | Long | 收益日期
 settleTime | Long | 打款时间
 hashRate | string | 算力
 hashUnit | string | 算力单位(H)
 status | string | 支付状态。WAIT_SETTLE:待支付;SETTLED:已支付
-type | string | 补款类型。MINING_EARN:挖矿收益;UNITE_COIN_EARN:联合挖矿;REWARD_EARN:活动奖励
+type | string | 补款类型。MINING_EARN:挖矿收益;UNITE_COIN_EARN:联合挖矿;REWARD_EARN:活动奖励;HASH_RATE_EARN:算力补款;FEE_RATE_EARN:客户手续费补贴
 
 #### 返回示例
 
@@ -482,8 +490,8 @@ type | string | 补款类型。MINING_EARN:挖矿收益;UNITE_COIN_EARN:联合�
   "success": true
 }
 ```
-## 币种累计汇总收益
-获取用户的累计汇总收益。
+## 用户累计收益
+获取用户累计收益。
 
 **请求频率：** api-key级别每秒2次
 
@@ -508,5 +516,47 @@ coinName | String | 币种 | 是
   "msg": "success",
   "retry": false,
   "data": 12 //币种累计汇总收益金额
+}
+```
+
+## 所有子账户累计收益
+获取所有子账户的累计收益。
+
+**请求频率：** api-key级别每秒2次
+
+#### HTTP请求
+GET /v1/external/sub-user/earn
+
+#### 请求示例
+GET /v1/external/sub-user/earn?coinName=BTC
+
+#### 请求参数
+
+请求参数 | 类型 | 含义 | 是否必传
+---|---|---|---
+coinName | String | 币种 | 是
+
+#### 返回值
+参数 | 类型 | 含义
+---|---|---
+puid | Long | 子账户id
+pname | string | 子账户名称
+amount | BigDecimal | 累计收益金额
+
+#### 返回示例
+
+```json
+{
+  "code": "200",
+  "data": [
+    {
+      "puid": 1,
+      "pname": "test",
+      "amount": 0.1
+    }
+  ],
+  "msg": "success",
+  "retry": false,
+  "success": true
 }
 ```

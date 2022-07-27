@@ -3,8 +3,12 @@
 The KuCoin Pool Developer Documentation is an API document written for users who wish to obtain data from the KuCoin Pool.
 
 ## Upcoming Changes
+
 **14/07/2022:**
-- Add Currency total income interface
+- Add Accumulated income of user interface
+
+**27/07/2022:**
+- Add Accumulated income of all sub-accounts interface
 
 # REST API
 ## API Server
@@ -159,6 +163,9 @@ print(response.json())
 
 ```
 
+# Glossary
+- User: Official website login account
+- Sub-accounts: mining accounts created by users in the mining pool system
 
 # Algorithms
 ## Algorithm List
@@ -195,8 +202,8 @@ data | list | Algorithm
 
 
 # User
-## Mining Account Information
-Get information about all mining accounts of the user.
+## Sub-account Information
+Get information about all sub accounts of the user.
 
 **Frequency of requests:** 2 times per second at Api-Key level.
 
@@ -209,12 +216,12 @@ GET /v1/external/user/query
 #### Return Value
 Parameter | Type | Description
 ---|---|---
-defaultAlgo | string | Algorithm selected when creating a mining account
+defaultAlgo | string | Algorithm selected when creating a sub account
 realHashRate | string | Real-time hashrate
 hourHashRate | string | Hourly hashrate
 dayHashRate | string | Daily hashrate
-puid | Long | Mining account ID
-pname | string | Mining account
+puid | Long | Sub account ID
+pname | string | Sub account name
 hashUnit | string | Hashrate unit (H)
 
 #### Return Example
@@ -241,7 +248,7 @@ hashUnit | string | Hashrate unit (H)
 
 # Mining Machines
 ## List of Mining Machines
-Get information about all mining machines under the mining account.
+Get information about all mining machines under the sub account.
 
 **Frequency of requests:** 2 times per second at Api-Key level.
 
@@ -258,7 +265,7 @@ Request Parameter | Type | Description | Required
 currentPage | Integer | Current page | Yes
 pageSize | Integer | Results of each page | Yes
 algo | String | Algorithm | Yes
-puid | Long | Mining account ID | Yes
+puid | Long | Sub account ID | Yes
 sortField | String | Sort field WORKER: Name of the mining machine; HASH_RATE: Real-time hashrate; HASH_RATE_HOUR: Hourly hashrate; HASH_RATE_DAY: Daily hashrate; REJECT: Rejection rate; LAST_SHARE_TIME: Last submitted time | Yes
 sort | String | Sort by ASC: ascending; DESC: descending | Yes
 status | String | Type of mining machine TOTAL: Total; ACTIVE: Active; INACTIVE: Inactive; INVALID: Invalid | Yes
@@ -324,7 +331,7 @@ Request Parameter | Type | Description | Required
 currentPage | Integer | Current page | Yes
 pageSize | Integer | Results of each page | Yes
 algo | String | Algorithm | Yes
-puid | Long | Mining account ID | Yes
+puid | Long | Sub account ID | Yes
 workerId | Long | Mining machine ID | Yes
 
 #### Return Value
@@ -364,7 +371,7 @@ status | String | Type of mining machine TOTAL: Total; ACTIVE: Active; INACTIVE:
 
 # Income
 ### Income List
-Get information about the mining income of the mining account.
+Get information about the mining income of the sub account.
 
 **Frequency of requests：** 2 times per second at Api-Key level.
 
@@ -381,7 +388,7 @@ Request Parameter | Type | Description | Required
 currentPage | Integer | Current page | Yes
 pageSize | Integer | Results of each page | Yes
 algo | String | Algorithm | Yes
-puid | Long | Mining account ID  | Yes
+puid | Long | Sub account ID  | Yes
 startTime | Long | Mining start date timestamp (UTC)  | No
 endTime | Long | Mining end date timestamp (UTC) | No
 
@@ -425,7 +432,7 @@ status | string | Payment status WAIT_SETTLE: Pending; SETTLED: Paid
 ```
 
 ## Extra Income
-Get information about the income of the mining account.
+Get information about the income of the sub account.
 
 **requency of requests:** 2 times per second at Api-Key level.
 
@@ -442,7 +449,7 @@ Request Parameter | Type | Description | Required
 currentPage | Integer | Current page | Yes
 pageSize | Integer | Results of each page  | Yes
 algo | String | Algorithm | Yes
-puid | Long | Mining account ID | Yes
+puid | Long | Sub account ID | Yes
 startTime | Long | Start date timestamp (UTC) | No
 endTime | Long | End date timestamp (UTC)  | No
 
@@ -456,7 +463,7 @@ settleTime | Long | Income time
 hashRate | string | Hashrate
 hashUnit | string | Hashrate unit (H)
 status | string | Payment status WAIT_SETTLE: Pending; SETTLED: Paid
-type | string | Type of income MINING_EARN: Mining income; UNITE_COIN_EARN: Merged mining; REWARD_EARN: Event rewards
+type | string | Type of income MINING_EARN: Mining income; UNITE_COIN_EARN: Merged mining; REWARD_EARN: Event rewards; HASH_RATE_EARN:Retroactive Mining Income; FEE_RATE_EARN:Mining Fee Subsidies
 
 #### Return Example
 
@@ -485,8 +492,8 @@ type | string | Type of income MINING_EARN: Mining income; UNITE_COIN_EARN: Merg
 }
 ```
 
-## Currency total income
-get currency total income for user.
+## Accumulated income of user
+get accumulated income of user.
 
 **requency of requests:** 2 times per second at Api-Key level.
 
@@ -511,5 +518,47 @@ coinName | String | currency | Yes
   "msg": "success",
   "retry": false,
   "data": 12   //Currency total income
+}
+```
+
+## Accumulated income of all sub-accounts
+get accumulated income of all sub-accounts.
+
+**requency of requests:** 2 times per second at Api-Key level.
+
+#### HTTP Request
+GET /v1/external/sub-user/earn
+
+#### Request Example
+GET /v1/external/sub-user/earn?coinName=BTC
+
+#### Request Parameters
+
+Request Parameter | Type | Description | Required
+---|---|---|---
+coinName | String | currency | Yes
+
+#### Return Value
+Request Parameter | Type | Description
+---|---|---
+puid | Long | Sub account ID
+pname | string | Sub account name
+amount | string | Income
+
+#### Return Example
+
+```json
+{
+  "code": "200",
+  "data": [
+    {
+      "puid": 1,
+      "pname": "test",
+      "amount": 0.1
+    }
+  ],
+  "msg": "success",
+  "retry": false,
+  "success": true
 }
 ```
