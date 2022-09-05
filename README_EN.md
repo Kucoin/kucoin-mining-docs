@@ -9,6 +9,10 @@ The KuCoin Pool Developer Documentation is an API document written for users who
 
 **27/07/2022:**
 - Add Accumulated income of all sub-accounts interface
+  
+**07/09/2022:**
+- Update The maximum value of paging parameter pageSize is 100
+- Update The request parameter sortField of the interface /v1/external/worker/query cancels the HASH_RATE_DAY sorting
 
 # REST API
 ## API Server
@@ -105,7 +109,7 @@ Pagination allows the fetching of results using the current page count and is hi
 Parameter | Default Value | Description
 ---|---|---
 currentPage | 1 | Current page
-pageSize | 50 | Number of results per page (min: 10, max: 500)
+pageSize | 50 | Number of results per page (min: 10, max: 100)
 
 Example
 GET /v1/external/worker/query?currentPage=1&pageSize=50
@@ -266,7 +270,7 @@ currentPage | Integer | Current page | Yes
 pageSize | Integer | Results of each page | Yes
 algo | String | Algorithm | Yes
 puid | Long | Sub account ID | Yes
-sortField | String | Sort field WORKER: Name of the mining machine; HASH_RATE: Real-time hashrate; HASH_RATE_HOUR: Hourly hashrate; HASH_RATE_DAY: Daily hashrate; REJECT: Rejection rate; LAST_SHARE_TIME: Last submitted time | Yes
+sortField | String | Sort field WORKER: Name of the mining machine; HASH_RATE: Real-time hashrate; HASH_RATE_HOUR: Hourly hashrate; REJECT: Rejection rate; LAST_SHARE_TIME: Last submitted time | Yes
 sort | String | Sort by ASC: ascending; DESC: descending | Yes
 status | String | Type of mining machine TOTAL: Total; ACTIVE: Active; INACTIVE: Inactive; INVALID: Invalid | Yes
 

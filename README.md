@@ -9,6 +9,10 @@
 **27/07/2022:**
 - 【新增】所有子账户累计收益接口
 
+**07/09/2022:**
+- 【更新】分页参数pageSize最大值调整为100
+- 【更新】接口/v1/external/worker/query的请求参数sortField取消HASH_RATE_DAY排序
+
 # REST API
 ## API服务器地址
 基本URL: https://www.kucoin.com/_api/miningpool
@@ -104,7 +108,7 @@ Pagination允许使用当前页数获取结果，非常适用于获取实时数�
 参数名称 | 默认值 | 含义
 ---|---|---
 currentPage | 1 | 当前页码
-pageSize | 50 | 每页记录数，最小值10，最大值500
+pageSize | 50 | 每页记录数，最小值10，最大值100
 
 示例
 GET /v1/external/worker/query?currentPage=1&pageSize=50
@@ -265,7 +269,7 @@ currentPage | Integer | 当前页 | 是
 pageSize | Integer | 每页数量 | 是
 algo | String | 算法 | 是
 puid | Long | 子账户id | 是
-sortField | String | 排序字段。WORKER:矿机名;HASH_RATE:实时算力;HASH_RATE_HOUR:小时算力;HASH_RATE_DAY:日算力;REJECT:拒绝率;LAST_SHARE_TIME:最后提交时间 | 是
+sortField | String | 排序字段。WORKER:矿机名;HASH_RATE:实时算力;HASH_RATE_HOUR:小时算力;REJECT:拒绝率;LAST_SHARE_TIME:最后提交时间 | 是
 sort | String | 排序方式。ASC:正序;DESC:倒序 | 是
 status | String | 矿机类型。TOTAL:总数;ACTIVE:活跃;INACTIVE:不活跃;INVALID:无效 | 是
 
