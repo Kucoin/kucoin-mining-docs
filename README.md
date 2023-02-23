@@ -3,6 +3,10 @@
 欢迎使用KuCoin矿池(KuCoin Pool)开发者文档。 此文档概述了用户获取矿池数据信息相关的开发接口。
 
 ## 更新预告
+
+**23/02/2023:**
+- 【更新】接口/v1/external/earn/query新增rejectRate字段
+- 
 **14/07/2022:**
 - 【新增】用户累计收益接口
 
@@ -396,15 +400,16 @@ startTime | Long | 挖矿开始日期 时间戳(UTC) | 否
 endTime | Long | 挖矿结束日期 时间戳(UTC) | 否
 
 #### 返回值
-参数 | 类型 | 含义
----|---|---
-amount | string | 收益
-currency | string | 收益单位
-miningDate | Long | 收益日期
-settleTime | Long | 打款时间
-hashRate | string | 日算力
-hashUnit | string | 算力单(H)
-status | string | 支付状态。WAIT_SETTLE:待支付;SETTLED:已支付
+| 参数         | 类型     | 含义                               |
+|------------|--------|----------------------------------|
+| amount     | string | 收益                               |
+| currency   | string | 收益单位                             |
+| miningDate | Long   | 收益日期                             |
+| settleTime | Long   | 打款时间                             |
+| hashRate   | string | 日算力                              |
+| hashUnit   | string | 算力单位(H)                          |
+| rejectRate | String | 拒绝率百分比。例：0.2=0.2%                |
+| status     | string | 支付状态。WAIT_SETTLE:待支付;SETTLED:已支付 |
 
 #### 返回示例
 
@@ -419,6 +424,7 @@ status | string | 支付状态。WAIT_SETTLE:待支付;SETTLED:已支付
         "currency": "BTC",
         "hashRate": 100000,
         "hashUnit": "H",
+        "rejectRate": 0.02,
         "miningDate": 1646040033139,
         "settleTime": 1646040033139,
         "status": "WAIT_SETTLE"

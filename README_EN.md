@@ -4,6 +4,9 @@ The KuCoin Pool Developer Documentation is an API document written for users who
 
 ## Upcoming Changes
 
+**23/02/2023:**
+- Update Interface /v1/external/earn/query adds rejectRate field
+
 **14/07/2022:**
 - Add Accumulated income of user interface
 
@@ -405,6 +408,7 @@ miningDate | Long | Mining date
 settleTime | Long | ncome time
 hashRate | string | Daily hashrate
 hashUnit | string | Hashrate unit (H)
+rejectRate | String | Rejection rate(%)
 status | string | Payment status WAIT_SETTLE: Pending; SETTLED: Paid
 
 #### Return Example
@@ -420,6 +424,7 @@ status | string | Payment status WAIT_SETTLE: Pending; SETTLED: Paid
         "currency": "BTC",
         "hashRate": 100000,
         "hashUnit": "H",
+        "rejectRate": 0.02,
         "miningDate": 1646040033139,
         "settleTime": 1646040033139,
         "status": "WAIT_SETTLE"
